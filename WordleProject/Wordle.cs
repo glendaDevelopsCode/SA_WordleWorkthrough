@@ -13,11 +13,32 @@ public class Wordle
     public string validateGuess (string guessedWord, string secretWordToTest)
     {
         if (guessedWord == string.Empty) return "Invalid Guess: No Word Supplied";
-        
-        //if (guessedWord == secretWordToTest) return "GGGGG";
+        if (guessedWord.Length < 5) return "Invalid Guess: guess too short";
+        if (guessedWord.Length > 5) return "Invalid Guess: guess too long";
+        if (guessedWord.Any(char.IsDigit)) return "Invalid Guess: Word should have only letters";
 
+        if (guessedWord == secretWordToTest) return "GGGGG";
 
-        return "-----";
+        string yourGuess = "";
+
+        for (var i = 0; i < guessedWord.Count(); i++)
+        {
+            if (guessedWord[i] == secretWordToTest[i]) 
+            {
+                yourGuess += 'G';
+                continue;
+            }
+            
+            if (secretWordToTest.Contains(guessedWord[i]))
+            {
+                yourGuess += 'Y';
+                continue;
+            }
+            
+            yourGuess += '-';               
+        }
+
+        return yourGuess;
     }
 
 }

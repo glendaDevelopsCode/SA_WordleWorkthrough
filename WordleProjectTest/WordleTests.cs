@@ -88,63 +88,103 @@ public class WordleProjectTest
         Wordle wordle = new();
 
         //Act
-        wordle.validateSecretWord(secretWordToTest);
+        //refactored slightly to remove secretWord handling. I suspect in a reality situation I would have designed this to hold the secret word somewhere and it'd be handed in.
         var result = wordle.validateGuess(guessedWord, secretWordToTest);
 
         //Assert
         Assert.Equal("Invalid Guess: No Word Supplied", result);
      }
 
-    // public void Should_ReturnInvalid_ShortGuess()
-    // {
-    //     //Arrange
-    //     var secretWordToTest = "plane";
-    //     var guessedWord = "";
-    //     //Act
-    //     //Assert
+    [Fact]
+    public void Should_ReturnInvalid_ShortGuess()
+    {
+        //Arrange
+        var secretWordToTest = "plane";
+        var guessedWord = "plan";
+        Wordle wordle = new();
 
-    //  }
+        //Act
+        var result = wordle.validateGuess(guessedWord, secretWordToTest);
 
-    // public void Should_ReturnInvalid_LongGuess()
-    // {
-    //     //Arrange
-    //     var secretWordToTest = "plane";
-    //     var guessedWord = "";
+        //Assert
+        Assert.Equal("Invalid Guess: guess too short", result);
+     }
 
-    //     //Act
-    //     //Assert
-    //  }
+    [Fact]
+    public void Should_ReturnInvalid_LongGuess()
+    {
+        //Arrange
+        var secretWordToTest = "plane";
+        var guessedWord = "planet";
+        Wordle wordle = new();
 
-    // public void Should_ReturnInvalid_DigitGuess()
-    // {
-    //     //Arrange
-    //     var secretWordToTest = "plane";
-    //     var guessedWord = "";
-    //     //Act
-    //     //Assert
+        //Act
+        var result = wordle.validateGuess(guessedWord, secretWordToTest);
 
-    // }
+        //Assert
+        Assert.Equal("Invalid Guess: guess too long" , result);
+     }
 
-    // public void Should_ReturnInvalid_Guess()
-    // {
-    //    //Arrange
-    //     var secretWordToTest = "plane";
-    //     var guessedWord = "";
+    [Fact]
+    public void Should_ReturnInvalid_DigitGuess()
+    {
+        //Arrange
+        var secretWordToTest = "plane";
+        var guessedWord = "p1ane";
+        Wordle wordle = new();
 
-    //     //Act
+        //Act
+        var result = wordle.validateGuess(guessedWord, secretWordToTest);
 
-    //     //Assert
+        //Assert
+        Assert.Equal("Invalid Guess: Word should have only letters", result);
 
-    // }
+    }
 
-    // public void Should_ReturnValid_CorrectGuess()
-    // {
-    //     //Arrange
+    [Fact]
+    public void Should_ReturnValid_CorrectGuess()
+    {
+        //Arrange
+        var secretWordToTest = "plane";
+        var guessedWord = "plane";
+        Wordle wordle = new();
 
-    //     //Act
+        //Act
+        var result = wordle.validateGuess(guessedWord, secretWordToTest);
 
-    //     //Assert       
-    // }
+        //Assert  
+        Assert.Equal("GGGGG", result);
+    }
+
+    [Fact]
+    public void Should_ReturnValid_PartialCorrectGuess()
+    {
+        //Arrange
+        var secretWordToTest = "plane";
+        var guessedWord = "plans";
+        Wordle wordle = new();
+
+        //Act
+        var result = wordle.validateGuess(guessedWord, secretWordToTest);
+
+        //Assert
+        Assert.Equal("GGGG-", result);
+    }
+
+    [Fact]
+    public void Should_ReturnValid_PartialCorrectLetterPoorlyPlacedGuess()
+    {
+        //Arrange
+        var secretWordToTest = "plane";
+        var guessedWord = "lanes";
+        Wordle wordle = new();
+
+        //Act
+        var result = wordle.validateGuess(guessedWord, secretWordToTest);
+
+        //Assert        
+        Assert.Equal("YYYY-", result);
+    }
 
     // public void Should_ReturnValid_IncorrectGuess()
     // {
@@ -155,14 +195,7 @@ public class WordleProjectTest
     //     //Assert        
     // }
 
-    // public void Should_ReturnValid_PartialCorrectGuess()
-    // {
-    //      //Arrange
 
-    //     //Act
-
-    //     //Assert       
-    // }
 
     // public void Should_ReturnValid_PartialCorrectMultiLetterGuess()
     // {
@@ -173,13 +206,5 @@ public class WordleProjectTest
     //     //Assert        
     // }
 
-    // public void Should_ReturnValid_PartialCorrectLetterMutlipledGuess()
-    // {
-    //     //Arrange
-
-    //     //Act
-
-    //     //Assert        
-    // }
     #endregion
 }
