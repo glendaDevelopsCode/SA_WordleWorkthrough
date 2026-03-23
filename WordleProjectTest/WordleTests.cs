@@ -1,4 +1,5 @@
 namespace WordleProjectTest;
+using WordleProject;
 
 public class WordleProjectTest
 {
@@ -142,7 +143,7 @@ public class WordleProjectTest
     }
 
     [Fact]
-    public void Should_ReturnValid_CorrectGuess()
+    public void Should_ReturnGGGGG_CorrectGuess()
     {
         //Arrange
         var secretWordToTest = "plane";
@@ -157,54 +158,64 @@ public class WordleProjectTest
     }
 
     [Fact]
-    public void Should_ReturnValid_PartialCorrectGuess()
+    public void Should_ReturnNNNNN_IncorrectGuess()
     {
         //Arrange
         var secretWordToTest = "plane";
-        var guessedWord = "plans";
+        var guessedWord = "ditch";
         Wordle wordle = new();
-
+        
         //Act
-        var result = wordle.validateGuess(guessedWord, secretWordToTest);
+        var result = wordle.validateGuess(guessedWord,secretWordToTest);
 
-        //Assert
-        Assert.Equal("GGGG-", result);
+        //Assert        
+        Assert.Equal("-----", result);
     }
 
     [Fact]
-    public void Should_ReturnValid_PartialCorrectLetterPoorlyPlacedGuess()
+    public void Should_ReturnNNNYN_PartialCorrectLetterPoorlyPlacedGuess()
     {
         //Arrange
         var secretWordToTest = "plane";
-        var guessedWord = "lanes";
+        var guessedWord = "world";
         Wordle wordle = new();
 
         //Act
         var result = wordle.validateGuess(guessedWord, secretWordToTest);
 
         //Assert        
-        Assert.Equal("YYYY-", result);
+        Assert.Equal("---Y-", result);
     }
 
-    // public void Should_ReturnValid_IncorrectGuess()
-    // {
-    //     //Arrange
+    [Fact]
+    public void Should_ReturnYYNNN_PartialCorrectMultiLetterGuess()
+    {
+        //Arrange
+        var secretWordToTest = "plane";
+        var guessedWord = "lever";
+        Wordle wordle = new();
 
-    //     //Act
+        //Act
+        var result = wordle.validateGuess(guessedWord, secretWordToTest);
 
-    //     //Assert        
-    // }
+        //Assert
+        Assert.Equal("YY---", result);
+    }
 
+    [Fact]
+    public void Should_ReturnValid_PartialCorrectGuess()
+    {
+        //Arrange
+        var secretWordToTest = "plane";
+        var guessedWord = "elate";
+        Wordle wordle = new();
 
+        //Act
+        var result = wordle.validateGuess(guessedWord, secretWordToTest);
 
-    // public void Should_ReturnValid_PartialCorrectMultiLetterGuess()
-    // {
-    //     //Arrange
-
-    //     //Act
-
-    //     //Assert        
-    // }
+        //Assert
+        Assert.Equal("-GG-G", result);
+    }
 
     #endregion
 }

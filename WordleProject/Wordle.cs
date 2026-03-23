@@ -1,3 +1,5 @@
+namespace WordleProject; 
+
 public class Wordle
 {
     public string validateSecretWord(string SecretWordToTest)
@@ -31,10 +33,28 @@ public class Wordle
             
             if (secretWordToTest.Contains(guessedWord[i]))
             {
-                yourGuess += 'Y';
+                // partial test
+                var alreadyTested = guessedWord.Substring(0, i);
+                var numberTotalOccurrances = secretWordToTest.Count(x => x == guessedWord[i]);
+                var numberInAlreadyTested = alreadyTested.Count(x => x == guessedWord[i]);
+
+                // Console.WriteLine(alreadyTested);
+                // Console.WriteLine(numberGuessedOccurrances);
+                // Console.WriteLine(numberInAlreadyTested);
+
+                //If the number of occurrances of the letter is greater than the number of occurrances captured in the word, we should throw back.
+                if ( numberTotalOccurrances <= numberInAlreadyTested )
+                {
+                    yourGuess += '-';
+                }
+                else
+                {
+                    yourGuess += 'Y';    
+                }
+
                 continue;
             }
-            
+
             yourGuess += '-';               
         }
 
