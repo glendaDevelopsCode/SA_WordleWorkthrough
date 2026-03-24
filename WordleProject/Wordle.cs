@@ -25,37 +25,41 @@ public class Wordle
 
         for (var i = 0; i < guessedWord.Count(); i++)
         {
+
             if (guessedWord[i] == secretWordToTest[i]) 
-            {
+            {                
                 yourGuess += 'G';
                 continue;
             }
-            
+            yourGuess += '-'; 
+        }
+
+        for (var i = 0; i < guessedWord.Count(); i++)
+        {
+            if (yourGuess[i] == 'G') continue;
+
             if (secretWordToTest.Contains(guessedWord[i]))
             {
-                // partial test
+                //This variable stores a partial word, it's everything that we have already tried.
                 var alreadyTested = guessedWord.Substring(0, i);
-                var numberTotalOccurrances = secretWordToTest.Count(x => x == guessedWord[i]);
+                //This is the number of times the letter has already come up.
                 var numberInAlreadyTested = alreadyTested.Count(x => x == guessedWord[i]);
 
-                // Console.WriteLine(alreadyTested);
-                // Console.WriteLine(numberGuessedOccurrances);
-                // Console.WriteLine(numberInAlreadyTested);
-
-                //If the number of occurrances of the letter is greater than the number of occurrances captured in the word, we should throw back.
+                //This is the total number of times the guessed letter occurs in the word.
+                var numberTotalOccurrances = secretWordToTest.Count(x => x == guessedWord[i]);
+                
                 if ( numberTotalOccurrances <= numberInAlreadyTested )
                 {
-                    yourGuess += '-';
+                    yourGuess = yourGuess.Remove(i, 1).Insert(i, "-") ;
                 }
                 else
                 {
-                    yourGuess += 'Y';    
+                    yourGuess = yourGuess.Remove(i, 1).Insert(i,"Y"); 
                 }
 
                 continue;
             }
-
-            yourGuess += '-';               
+            yourGuess = yourGuess.Remove(i,1).Insert(i, "-"); 
         }
 
         return yourGuess;
